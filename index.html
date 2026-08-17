@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Learning Study Material | Class 6 to 12</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #afa9af;
+            color: red;
+            perspective: 1500px;
+        }
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+            color:rgb(255, 255, 255);
+            text-align: center;
+            padding: 2.5rem 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1000px;
+            margin: -2rem auto 2rem;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 10;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border-top: 5px solid #8B4513;
+        }
+        h2 {
+            margin-bottom: 1.5rem;
+            color: #2d3748;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        .grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #ffffff;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .btn:hover {
+            background-color: #e2e8f0;
+            transform: translateY(-2px);
+        }
+        .btn.active {
+            background-color: #667eea;
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            border-color: #5a67d8;
+        }
+        .hidden {
+            display: none !important;
+        }
+        
+        .selected-info {
+            background: #fdf6e2;
+            color: #8B4513;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            display: inline-block;
+            border: 1px dashed #d4a373;
+        }
+        
+        .action-layout {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .btn-download {
+            background-color: #27ae60;
+            color: white;
+            font-size: 1rem;
+            padding: 12px 20px;
+        }
+        .btn-download:hover { 
+            background-color: #219653; 
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4);
+        }
+        .btn-download:disabled, .btn-view:disabled {
+            background-color: #cbd5e0 !important;
+            cursor: not-allowed;
+            box-shadow: none !important;
+            color: #718096;
+        }
+
+        .btn-view {
+            background-color: #2980b9;
+            color: white;
+            font-size: 1rem;
+            padding: 12px 20px;
+        }
+        .btn-view:hover {
+            background-color: #2471a3;
+            box-shadow: 0 4px 15px rgba(41, 128, 185, 0.4);
+        }
+        
+        .status-msg {
+            margin-top: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #718096;
+            text-align: center;
+        }
+
+        .file-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px dashed #a0aec0;
+            border-radius: 8px;
+            background: #f7fafc;
+        }
+
+        /* Go Back Button Style */
+        .back-btn-container {
+            margin-bottom: 15px;
+        }
+        .btn-back {
+            background-color: #ffffff;
+            color: #4a5568;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+        }
+        .btn-back:hover {
+            background-color: #e2e8f0;
+        }
+
+        /* Realistic 3D Hardcover Book Style */
+        .subject-card {
+            position: relative;
+            width: 150px;
+            height: 220px;
+            cursor: pointer;
+            perspective: 1000px;
+            margin: 10px;
+            background: transparent;
+            border: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .book-cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1b263b 0%, #0d1b2a 100%);
+            border-radius: 4px 10px 10px 4px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.3), inset 3px 0 5px rgba(255,255,255,0.1), inset -3px 0 10px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 15px 12px 15px 22px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform-origin: left center;
+            border-left: 12px solid #111;
+        }
+
+        .subject-card:hover .book-cover {
+            transform: rotateY(-20deg) translateY(-5px);
+            box-shadow: 12px 10px 25px rgba(0,0,0,0.4), inset 3px 0 5px rgba(255,255,255,0.15);
+        }
+
+        /* Realistic Paper Edge Effect */
+        .book-cover::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 4px;
+            bottom: 4px;
+            width: 6px;
+            background: linear-gradient(to right, #e2e8f0, #cbd5e0, #f7fafc);
+            border-radius: 0 2px 2px 0;
+            box-shadow: 1px 0 2px rgba(0,0,0,0.1);
+        }
+
+        .book-spine-line {
+            position: absolute;
+            left: 14px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(0,0,0,0.4);
+            box-shadow: 1px 0 1px rgba(255,255,255,0.1);
+        }
+
+        .book-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            z-index: 2;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            word-wrap: break-word;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 8px;
+        }
+
+        .book-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
+            font-size: 0.75rem;
+            color: #d8b4fe;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .book-emblem {
+            font-size: 1.2rem;
+            color: #f1c40f;
+            text-align: center;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1><i class="fas fa-graduation-cap"></i> Study Hub</h1>
+        <p>Class 6th se 12th tak ke sabhi subjects aur chapters ke Notes aasani se Download Kare.</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- Back Button -->
+        <div class="back-btn-container hidden" id="back-button-container">
+            <button class="btn-back" onclick="history.back()"><i class="fas fa-arrow-left"></i> Go Back</button>
+        </div>
+
+        <!-- Step 1: Select Class -->
+        <div class="card hidden" id="class-section">
+            <h2><i class="fas fa-school"></i> Step 1: Choose Your Class</h2>
+            <div class="grid-container" id="class-buttons">
+                <button class="btn" onclick="selectClass(6)">Class 6</button>
+                <button class="btn" onclick="selectClass(7)">Class 7</button>
+                <button class="btn" onclick="selectClass(8)">Class 8</button>
+                <button class="btn" onclick="selectClass(9)">Class 9</button>
+                <button class="btn" onclick="selectClass(10)">Class 10</button>
+                <button class="btn" onclick="selectClass(11)">Class 11</button>
+                <button class="btn" onclick="selectClass(12)">Class 12</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Select Subject -->
+        <div class="card hidden" id="subject-section">
+            <h2><i class="fas fa-book-open"></i> Step 2: Select Your Subject</h2>
+            <div class="grid-container" id="subject-buttons"></div>
+        </div>
+
+        <!-- Step 3: Select Category -->
+        <div class="card hidden" id="type-section">
+            <h2><i class="fas fa-layer-group"></i> Step 3: Choose Category</h2>
+            <div class="grid-container" id="type-buttons">
+                <button class="btn" onclick="selectMaterialType('notes')"><i class="fas fa-book"></i> Chapters / Notes</button>
+                <button class="btn" onclick="selectMaterialType('solutions')"><i class="fas fa-pen-nib"></i> Solutions</button>
+                <button class="btn" onclick="selectMaterialType('answers')"><i class="fas fa-reply"></i> Answers</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Select Chapter -->
+        <div class="card hidden" id="chapter-section">
+            <h2 id="chapter-heading"><i class="fas fa-list-ol"></i> Step 4: Select Your Chapter</h2>
+            <div class="grid-container" id="chapter-buttons"></div>
+        </div>
+
+        <!-- Step 5: Actions (Download/View + Upload) -->
+        <div class="card hidden" id="action-section">
+            <h2><i class="fas fa-cloud-download-alt"></i> Step 5: Get or Upload Material</h2>
+            <br>
+            <div class="selected-info" id="selected-info-text"></div>
+            
+            <div class="action-layout">
+                <!-- Download & View Section -->
+                <div class="action-box" id="download-action-box">
+                    <h3 style="margin-bottom: 15px; color:#2d3748;">Study Material</h3>
+                    <p style="margin-bottom: 20px; color:#718096; font-size:0.9rem;">Available PDF dekhein ya download karein.</p>
+                    
+                    <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn btn-download" id="download-btn" disabled>
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <button class="btn btn-view" id="view-btn" disabled>
+                            <i class="fas fa-eye"></i> View Online
+                        </button>
+                    </div>
+                    <div class="status-msg" id="download-status">Checking PDF...</div>
+                </div>
+
+                <!-- Upload Section -->
+                <div class="action-box">
+                    <h3 style="margin-bottom: 15px; color:#2d3748;">Upload Material</h3>
+                    <p style="margin-bottom: 20px; color:#718096; font-size:0.9rem;">Is chapter ke liye PDF upload karein.</p>
+                    
+                    <input type="file" id="pdf-upload" accept="application/pdf" class="file-input">
+                    
+                    <button class="btn" id="upload-btn" onclick="uploadPDF()" style="background-color: #ed8936; color: white; width: 100%; justify-content: center;">
+                        <i class="fas fa-upload"></i> Upload File
+                    </button>
+                    <div class="status-msg" id="upload-status"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ==============================================
+        // 1. PDF DATABASE (Default Links)
+        // ==============================================
+        const pdfLinks = {
+            "10_Science_notes_1": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            "10_Science_notes_2": "https://example.com/chapter2_notes.pdf",
+            "10_Science_solutions_1": "https://example.com/chapter1_solutions.pdf",
+            "12_Physics_notes_1": "https://example.com/class12_physics_ch1.pdf"
+        };
+
+        const classSubjects = {
+            6: ['Mathematics', 'Science', 'English', 'Hindi', 'Social Science', 'Sanskrit', 'Computer'],
+            7: ['Mathematics', 'Science', 'English', 'Hindi', 'Social Science', 'Sanskrit', 'Computer'],
+            8: ['Mathematics', 'Science', 'English', 'Hindi', 'Social Science', 'Sanskrit', 'Computer'],
+            9: ['Mathematics', 'Science', 'English', 'Hindi', 'History', 'Geography', 'Civics', 'Sanskrit', 'IT'],
+            10: ['Mathematics', 'Science', 'English', 'Hindi', 'History', 'Geography', 'Civics', 'Sanskrit', 'IT'],
+            11: ['Physics', 'Chemistry', 'Mathematics', 'Biology', 'Computer Science', 'Accountancy', 'Business Studies', 'Economics', 'History', 'Political Science', 'Geography', 'English'],
+            12: ['Physics', 'Chemistry', 'Mathematics', 'Biology', 'Computer Science', 'Accountancy', 'Business Studies', 'Economics', 'History', 'Political Science', 'Geography', 'English']
+        };
+
+        // Book Cover Color Palettes for Realistic Aesthetic
+        const bookGradients = [
+            "linear-gradient(135deg, #2c3e50 0%, #1a252f 100%)",
+            "linear-gradient(135deg, #1b263b 0%, #0d1b2a 100%)",
+            "linear-gradient(135deg, #3a506b 0%, #1c2541 100%)",
+            "linear-gradient(135deg, #2b2d42 0%, #11101d 100%)",
+            "linear-gradient(135deg, #4a4e69 0%, #22223b 100%)"
+        ];
+
+        // ==============================================
+        // INDEXEDDB STORAGE HELPERS FOR LARGE PDF FILES
+        // ==============================================
+        const DB_NAME = 'StudyHubLargeStorageDB';
+        const STORE_NAME = 'pdfStore';
+
+        function openDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, 1);
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => resolve(request.result);
+                request.onupgradeneeded = (event) => {
+                    const db = event.target.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        db.createObjectStore(STORE_NAME);
+                    }
+                };
+            });
+        }
+
+        async function getStoredPDF(key) {
+            const db = await openDB();
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(STORE_NAME, 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.get(key);
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function storePDF(key, data) {
+            const db = await openDB();
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(STORE_NAME, 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.put(data, key);
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        // ==============================================
+        // 2. PAGE LOAD & NAVIGATION LOGIC (New Page Feel)
+        // ==============================================
+        let currentClass = null;
+        let currentSubject = null;
+        let currentType = null;
+        let currentChapter = null;
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            currentClass = urlParams.get('class');
+            currentSubject = urlParams.get('subject');
+            currentType = urlParams.get('type');
+            currentChapter = urlParams.get('chapter');
+
+            if (currentType === 'answers') {
+                document.getElementById('action-section').classList.remove('hidden');
+                document.getElementById('back-button-container').classList.remove('hidden');
+                
+                document.getElementById('selected-info-text').innerHTML = 
+                    `<i class="fas fa-check-circle"></i> Class ${currentClass} 
+                     <i class="fas fa-chevron-right" style="font-size:0.8rem; margin:0 10px;"></i> ${currentSubject}
+                     <i class="fas fa-chevron-right" style="font-size:0.8rem; margin:0 10px;"></i> Answers`;
+                document.getElementById('download-action-box').classList.remove('hidden');
+                checkDownloadAvailability();
+
+            } else if (currentChapter) {
+                document.getElementById('action-section').classList.remove('hidden');
+                document.getElementById('back-button-container').classList.remove('hidden');
+                
+                let typeText = currentType === 'notes' ? 'Notes' : 'Solutions';
+                
+                document.getElementById('selected-info-text').innerHTML = 
+                    `<i class="fas fa-check-circle"></i> Class ${currentClass} 
+                     <i class="fas fa-chevron-right" style="font-size:0.8rem; margin:0 10px;"></i> ${currentSubject}
+                     <i class="fas fa-chevron-right" style="font-size:0.8rem; margin:0 10px;"></i> ${typeText}
+                     <i class="fas fa-chevron-right" style="font-size:0.8rem; margin:0 10px;"></i> Chapter ${currentChapter}`;
+                document.getElementById('download-action-box').classList.remove('hidden');
+                checkDownloadAvailability();
+
+            } else if (currentType) {
+                document.getElementById('chapter-section').classList.remove('hidden');
+                document.getElementById('back-button-container').classList.remove('hidden');
+                showChapters();
+
+            } else if (currentSubject) {
+                document.getElementById('type-section').classList.remove('hidden');
+                document.getElementById('back-button-container').classList.remove('hidden');
+
+            } else if (currentClass) {
+                document.getElementById('subject-section').classList.remove('hidden');
+                document.getElementById('back-button-container').classList.remove('hidden');
+                showSubjects(currentClass);
+
+            } else {
+                document.getElementById('class-section').classList.remove('hidden');
+            }
+        };
+
+        function selectClass(classNum) {
+            window.location.href = `?class=${classNum}`;
+        }
+
+        function selectSubject(subjectName) {
+            window.location.href = `?class=${currentClass}&subject=${subjectName}`;
+        }
+
+        function selectMaterialType(type) {
+            window.location.href = `?class=${currentClass}&subject=${currentSubject}&type=${type}`;
+        }
+
+        function selectChapter(chapterNum) {
+            window.location.href = `?class=${currentClass}&subject=${currentSubject}&type=${currentType}&chapter=${chapterNum}`;
+        }
+
+        function showSubjects(classNum) {
+            const subjectContainer = document.getElementById('subject-buttons');
+            subjectContainer.innerHTML = '';
+            const subjects = classSubjects[classNum] || [];
+
+            subjects.forEach((subject, index) => {
+                let card = document.createElement('button');
+                card.className = 'subject-card';
+                
+                let gradient = bookGradients[index % bookGradients.length];
+                
+                card.innerHTML = `
+                    <div class="book-cover" style="background: ${gradient};">
+                        <div class="book-spine-line"></div>
+                        <div class="book-emblem"><i class="fas fa-book"></i></div>
+                        <div class="book-title">${subject}</div>
+                        <div class="book-footer">
+                            <span>NCERT</span>
+                            <span>Class ${classNum}</span>
+                        </div>
+                    </div>
+                `;
+                card.onclick = function() { selectSubject(subject); };
+                subjectContainer.appendChild(card);
+            });
+        }
+
+        function showChapters() {
+            const chapterContainer = document.getElementById('chapter-buttons');
+            const chapterHeading = document.getElementById('chapter-heading');
+            chapterContainer.innerHTML = '';
+            const totalChapters = 14; 
+            
+            if (currentType === 'solutions') {
+                chapterHeading.innerHTML = `<i class="fas fa-list-ol"></i> Step 4: Select Chapter for Solutions`;
+            } else {
+                chapterHeading.innerHTML = `<i class="fas fa-list-ol"></i> Step 4: Select Chapter for Notes`;
+            }
+            
+            for(let i = 1; i <= totalChapters; i++) {
+                let btn = document.createElement('button');
+                btn.className = 'btn';
+                
+                let labelText = currentType === 'solutions' ? `Solution Ch ${i}` : `Chapter ${i}`;
+                
+                btn.innerHTML = `<i class="fas fa-book-open"></i> ${labelText}`;
+                btn.onclick = function() { selectChapter(i); };
+                chapterContainer.appendChild(btn);
+            }
+        }
+
+        function openPDFUrl(url) {
+            if (url.startsWith('data:')) {
+                try {
+                    const arr = url.split(',');
+                    const mime = arr[0].match(/:(.*?);/)[1];
+                    const bstr = atob(arr[1]);
+                    let n = bstr.length;
+                    const u8arr = new Uint8Array(n);
+                    while (n--) {
+                        u8arr[n] = bstr.charCodeAt(n);
+                    }
+                    const blob = new Blob([u8arr], { type: mime });
+                    const blobUrl = URL.createObjectURL(blob);
+                    window.open(blobUrl, '_blank');
+                } catch (e) {
+                    window.open(url, '_blank');
+                }
+            } else {
+                window.open(url, '_blank');
+            }
+        }
+
+        function downloadPDFUrl(url, filename) {
+            if (url.startsWith('data:')) {
+                try {
+                    const arr = url.split(',');
+                    const mime = arr[0].match(/:(.*?);/)[1];
+                    const bstr = atob(arr[1]);
+                    let n = bstr.length;
+                    const u8arr = new Uint8Array(n);
+                    while (n--) {
+                        u8arr[n] = bstr.charCodeAt(n);
+                    }
+                    const blob = new Blob([u8arr], { type: mime });
+                    const blobUrl = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = blobUrl;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+                } catch (e) {
+                    window.open(url, '_blank');
+                }
+            } else {
+                const a = document.createElement('a');
+                a.href = url;
+                a.target = '_blank';
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        }
+
+        // ==============================================
+        // 3. CHECK AVAILABILITY & PERMANENT UPLOAD LOGIC
+        // ==============================================
+        async function checkDownloadAvailability() {
+            let pdfKey = currentType === 'answers' 
+                ? `${currentClass}_${currentSubject}_${currentType}` 
+                : `${currentClass}_${currentSubject}_${currentType}_${currentChapter}`;
+            
+            let downloadBtn = document.getElementById('download-btn');
+            let viewBtn = document.getElementById('view-btn');
+            let statusMsg = document.getElementById('download-status');
+
+            try {
+                let storedPDF = await getStoredPDF(pdfKey);
+                if (storedPDF) {
+                    downloadBtn.disabled = false;
+                    viewBtn.disabled = false;
+                    statusMsg.innerHTML = `<span style="color: #27ae60;"><i class="fas fa-check-circle"></i> PDF Available (Uploaded Locally)!</span>`;
+                    
+                    downloadBtn.onclick = function() {
+                        downloadPDFUrl(storedPDF, `${currentSubject}_Class_${currentClass}_${currentType}.pdf`);
+                    };
+                    viewBtn.onclick = function() {
+                        openPDFUrl(storedPDF);
+                    };
+                    return;
+                }
+            } catch (err) {
+                console.error("IndexedDB error:", err);
+            }
+
+            let link = pdfLinks[pdfKey];
+            if (link) {
+                downloadBtn.disabled = false;
+                viewBtn.disabled = false;
+                statusMsg.innerHTML = `<span style="color: #27ae60;"><i class="fas fa-check-circle"></i> PDF Available!</span>`;
+                
+                downloadBtn.onclick = function() {
+                    downloadPDFUrl(link, `${currentSubject}_Class_${currentClass}_${currentType}.pdf`);
+                };
+                viewBtn.onclick = function() {
+                    openPDFUrl(link);
+                };
+            } else {
+                downloadBtn.disabled = true;
+                viewBtn.disabled = true;
+                statusMsg.innerHTML = `<span style="color: #e74c3c;"><i class="fas fa-times-circle"></i> PDF Not Available Yet. Please Upload!</span>`;
+            }
+        }
+
+        async function uploadPDF() {
+            let fileInput = document.getElementById('pdf-upload');
+            let uploadStatus = document.getElementById('upload-status');
+
+            if (fileInput.files.length === 0) {
+                uploadStatus.innerHTML = `<span style="color: #e74c3c;">Pehle ek PDF file select karein!</span>`;
+                return;
+            }
+
+            let file = fileInput.files[0];
+            uploadStatus.innerHTML = `<span style="color: #e67e22;">Saving PDF... Please wait</span>`;
+
+            let reader = new FileReader();
+            reader.onload = async function(e) {
+                let base64Data = e.target.result;
+                let pdfKey = currentType === 'answers' 
+                    ? `${currentClass}_${currentSubject}_${currentType}` 
+                    : `${currentClass}_${currentSubject}_${currentType}_${currentChapter}`;
+
+                try {
+                    await storePDF(pdfKey, base64Data);
+                    uploadStatus.innerHTML = `<span style="color: #27ae60;"><i class="fas fa-check-circle"></i> PDF Successfully Uploaded & Saved!</span>`;
+                    checkDownloadAvailability();
+                } catch (err) {
+                    uploadStatus.innerHTML = `<span style="color: #e74c3c;">Storage Error: File size might be too large.</span>`;
+                }
+            };
+            reader.onerror = function() {
+                uploadStatus.innerHTML = `<span style="color: #e74c3c;">File read karne mein error aayi!</span>`;
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>
